@@ -1,0 +1,31 @@
+long largestRectangle(vector<int> h) {
+    stack<int> s_val,s_index;
+    unsigned long height,area=0;
+    for(unsigned long i=0;i<h.size();i++) 
+    {
+        if(s_val.empty() || s_val.top()<h[i]) {s_val.push(h[i]);s_index.push(i);}
+        else
+        {
+            while(!(s_val.empty() || s_val.top()<h[i]))
+            {
+                height=s_val.top();s_val.pop();s_index.pop();
+                
+                if(s_val.empty()) area = max(area,height*i); 
+                else area = max(area,height*(i-s_index.top()-1));
+                cout<<height<<" "<<area<<" "<<i<<endl;
+                
+            }
+            s_val.push(h[i]);s_index.push(i);
+        }
+    }
+    while(!s_val.empty())
+    {
+        height=s_val.top();s_val.pop();s_index.pop();
+                
+        if(s_val.empty()) area = max(area,height*h.size()); 
+        else area = max(area,height*(h.size()-s_index.top()-1));
+        cout<<height<<" "<<area<<" "<<h.size()<<endl;
+            
+    }
+    return area;
+}
