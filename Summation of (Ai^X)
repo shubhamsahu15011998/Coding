@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct data
+{
+    long val,index;
+};
+bool compareInterval(data i1, data i2)
+{
+    if(i1.val == i2.val) return (i1.index>i2.index);
+    return (i1.val < i2.val);
+}
+int main()
+{
+	long long temp,t,n,k,num;
+	cin>>t;
+	while(t--)
+    {
+        cin>>n>>k;
+        num=(long long)pow(2,30);
+        long long inp;
+        data a[31];
+        for(int i=0;i<=30;i++) {a[i].val=0;a[i].index=i;}
+        //for(int i=0;i<=30;i++) {cout<<a[i].index<<" "<<a[i].val<<endl;}
+        for(long j=0;j<n;j++)
+        {
+            temp=num;
+            cin>>inp;
+            for(int i=30;i>=0;i--)
+            {
+                //cout<<i<<" "<<temp<<endl;
+                if(inp>=temp) {a[i].val+=temp;inp-=temp;}
+                temp/=2;
+            }
+
+        }
+        //for(int i=0;i<=30;i++) {cout<<a[i].index<<" "<<a[i].val<<endl;}
+        sort(a, a+31,compareInterval);
+        //for(int i=0;i<=30;i++) {cout<<a[i].index<<" "<<a[i].val<<endl;}
+        long long ans=0;
+        for(long i=30,o=0;i>=0;i--)
+        {
+            ans+=(long long)pow(2,a[i].index);
+            o++;
+            if(o==k) break;
+        }
+        cout<<ans<<endl;
+    }
+	return 0;
+}
